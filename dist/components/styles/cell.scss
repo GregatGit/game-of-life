@@ -1,0 +1,15 @@
+$heightandwidth : 20px;
+$bgColor: blue;
+
+.cell {
+  height: $heightandwidth;
+  width: $heightandwidth;
+  float: left;
+  border: 1px solid black
+}
+
+.alive {
+
+  background-color: $bgColor;
+
+}

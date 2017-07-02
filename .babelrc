@@ -1,0 +1,11 @@
+{
+  "presets": [
+    "stage-0", "es2015", "react"
+  ],
+  "plugins": ["transform-runtime", "transform-class-properties", "transform-es2015-arrow-functions"],
+  "env": {
+    "test": {
+      "plugins": ["transform-es2015-modules-commonjs"]
+    }
+  }
+}
