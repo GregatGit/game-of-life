@@ -1,5 +1,6 @@
 $heightandwidth : 20px;
-$bgColor: blue;
+$bgColorAlive: blue;
+$bgColorDead: red;
 
 .cell {
   height: $heightandwidth;
@@ -10,6 +11,10 @@ $bgColor: blue;
 
 .alive {
 
-  background-color: $bgColor;
+  background-color: $bgColorAlive;
 
+}
+
+.dead {
+  background-color: $bgColorDead;
 }

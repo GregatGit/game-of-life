@@ -2,8 +2,9 @@ import React from 'react'
 import './styles/cell.scss'
 
 const Cell = (props) => {
+  let cellClass = `cell ${props.class}`
   return (
-    <div key={props.key} className='cell alive'></div>
+    <div id={props.id} className={cellClass}></div>
   )
 }
 
