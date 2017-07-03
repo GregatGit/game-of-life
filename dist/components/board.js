@@ -3,13 +3,14 @@ import Cell from './cell'
 import './styles/board.scss'
 import cellsArr from '../logic/cellbuilder'
 import updateNeigboursCount from '../logic/counter'
+import resetNeighbourCount from '../logic/resetNeighbourCount'
 
 class Board extends Component {
   constructor (props){
     super (props)
     this.state = {
-      boardLength: 10,
-      boardHeight: 10,
+      boardLength: 60,
+      boardHeight: 30,
       generation: 0
     }
   }
@@ -17,24 +18,13 @@ class Board extends Component {
     console.log('before', cellsArr)
     let temp = this.state.generation
     this.setState({generation: temp + 1})
-    for (let i = 0; i < cellsArr.length; i++){
+    for (let i = 0; i < cellsArr.length; i++){ // count cells alive neighb
       for (let j = 0; j < cellsArr[i].length; j++){
         updateNeigboursCount(cellsArr, i, j, this.state.boardHeight, this.state.boardLength)
         }
      }
     for (let i = 0; i < cellsArr.length; i++){
-      cellsArr[i].forEach((cell) => {
-        //cell.alive = !cell.alive
-        if (cell.alive){
-          if (cell.neighbourCount < 2 || cell.neighbourCount > 3){
-            cell.alive = false
-          }else{
-            if (cell.count === 3){
-              cell.alive = true
-            }
-          }
-        }
-      })
+      cellsArr[i].forEach(resetNeighbourCount)
     }
     console.log('before count reset', cellsArr)
     for (let i = 0; i < cellsArr.length; i++){
@@ -43,16 +33,8 @@ class Board extends Component {
       })
     }
   }
-  resetNeighbourCount = (cell) => {
-    if (cell.alive){
-      if (cell.neighbourCount > 2 || cell.neighbourCount < 3){
-        cell.alive = false
-      }else{
-        if (cell.neighbourCount === 3)
-          cell.alive = true
-      }
-    }
-    cell.resetNeighbourCount = 0
+  switchCellOffOrOn = (row, col) => {
+    console.log('x and y', row, col)
   }
   render () {
     let cellsAll = []
@@ -66,6 +48,7 @@ class Board extends Component {
         cellsAll.push(
           <Cell id={count.toString()}
             class={aliveOrDead}
+            turnOffOn={() => this.switchCellOffOrOn(i, j)}
         />)
       }
       cellsAll.push(<br />)
