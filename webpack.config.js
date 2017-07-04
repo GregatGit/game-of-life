@@ -11,6 +11,7 @@ module.exports = {
     contentBase: './build',
     port: 3000
   },
+  devtool: "source-map",
   module: {
     loaders: [
       {

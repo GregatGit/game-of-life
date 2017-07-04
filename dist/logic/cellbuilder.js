@@ -1,8 +1,8 @@
 const cellsArr = []
-let height = 30
+let height = 40
 let width = 60
 
-function newCell(row, col, maxRow, maxCol){
+function newCell(row, col){
   let temp = false
   if (row % 2 === 0){
     temp = true
@@ -16,7 +16,7 @@ function newCell(row, col, maxRow, maxCol){
 for (let i = 0; i < height; i++){
   let rowArr = []
   for (let j = 0; j < width; j++){
-    rowArr.push(new newCell(i, j, width, height))
+    rowArr.push(new newCell(i, j))
   }
   cellsArr.push(rowArr)
 }

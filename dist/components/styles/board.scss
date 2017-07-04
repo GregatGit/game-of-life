@@ -1,6 +1,8 @@
-$boardWidth: 1320px;
+$boardWidth60: 1320px;
+$boardWidth10: 220px;
+$boardWidth5: 110px;
 
 .board {
-  width: $boardWidth;
+  width: $boardWidth60;
   margin: 0 auto;
 }

@@ -1,32 +1,34 @@
 import React, { Component }  from 'react'
 import Cell from './cell'
 import './styles/board.scss'
-import cellsArr from '../logic/cellbuilder'
+import cells from '../logic/cellbuilder'
 import updateNeigboursCount from '../logic/counter'
-import resetNeighbourCount from '../logic/resetNeighbourCount'
-
+import aliveOrDeadUpdate from '../logic/resetNeighbourCount'
+const cellsArr = cells
 class Board extends Component {
   constructor (props){
     super (props)
     this.state = {
       boardLength: 60,
-      boardHeight: 30,
+      boardHeight: 40,
       generation: 0
     }
   }
   nextGeneration = () => {
-    console.log('before', cellsArr)
-    let temp = this.state.generation
-    this.setState({generation: temp + 1})
-    for (let i = 0; i < cellsArr.length; i++){ // count cells alive neighb
+    //console.log('before', cellsArr)
+    for (let i = 0; i < cellsArr.length; i++){ // count cells alive neighbours
       for (let j = 0; j < cellsArr[i].length; j++){
         updateNeigboursCount(cellsArr, i, j, this.state.boardHeight, this.state.boardLength)
         }
-     }
-    for (let i = 0; i < cellsArr.length; i++){
-      cellsArr[i].forEach(resetNeighbourCount)
     }
-    console.log('before count reset', cellsArr)
+    let temp = this.state.generation
+    this.setState({generation: temp + 1})
+    //console.log('gen:', this.state.generation)
+    console.log('one', cellsArr)
+    for (let i = 0; i < cellsArr.length; i++){
+      cellsArr[i].forEach(aliveOrDeadUpdate)
+    }
+    console.log('one', cellsArr)
     for (let i = 0; i < cellsArr.length; i++){
       cellsArr[i].forEach((cell) => {
         cell.neighbourCount = 0
