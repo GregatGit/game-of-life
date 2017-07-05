@@ -1,17 +1,18 @@
 import React, { Component }  from 'react'
 import Cell from './cell'
 import './styles/board.scss'
-import cells from '../logic/cellbuilder'
+import cellsArr from '../logic/cellbuilder'
 import updateNeigboursCount from '../logic/counter'
 import aliveOrDeadUpdate from '../logic/resetNeighbourCount'
-const cellsArr = cells
+ 
 class Board extends Component {
   constructor (props){
     super (props)
     this.state = {
-      boardLength: 60,
-      boardHeight: 40,
-      generation: 0
+      boardLength: 10,
+      boardHeight: 10,
+      generation: 0,
+      clicked: false
     }
   }
   nextGeneration = () => {
@@ -23,20 +24,21 @@ class Board extends Component {
     }
     let temp = this.state.generation
     this.setState({generation: temp + 1})
-    //console.log('gen:', this.state.generation)
-    console.log('one', cellsArr)
+    // see which cell should be alive or dead
     for (let i = 0; i < cellsArr.length; i++){
       cellsArr[i].forEach(aliveOrDeadUpdate)
     }
-    console.log('one', cellsArr)
+    // rest all cell neighbour counts to 0
     for (let i = 0; i < cellsArr.length; i++){
       cellsArr[i].forEach((cell) => {
         cell.neighbourCount = 0
       })
     }
   }
-  switchCellOffOrOn = (row, col) => {
+  switchCellOffOrOn = (arr, row, col) => {
     console.log('x and y', row, col)
+    arr[row][col].alive = !arr[row][col].alive
+    this.setState({clicked: true})
   }
   render () {
     let cellsAll = []
@@ -48,9 +50,10 @@ class Board extends Component {
           aliveOrDead = `alive`
         }
         cellsAll.push(
-          <Cell id={count.toString()}
+          <Cell 
+            id={count.toString()}
             class={aliveOrDead}
-            turnOffOn={() => this.switchCellOffOrOn(i, j)}
+            turnOffOn={() => this.switchCellOffOrOn(cellsArr, i, j)}
         />)
       }
       cellsAll.push(<br />)
