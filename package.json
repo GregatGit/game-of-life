@@ -38,6 +38,8 @@
     "webpack-dev-server": "^2.4.5"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "build": "webpack",
     "start": "webpack-dev-server",
     "test": "jest"
