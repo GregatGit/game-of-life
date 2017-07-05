@@ -4,6 +4,8 @@ import './styles/board.scss'
 import cellsArr from '../logic/cellbuilder'
 import updateNeigboursCount from '../logic/counter'
 import aliveOrDeadUpdate from '../logic/resetNeighbourCount'
+import BadgeSimple from './BadgeSimple'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
  
 class Board extends Component {
   constructor (props){
@@ -12,8 +14,12 @@ class Board extends Component {
       boardLength: 60,
       boardHeight: 30,
       generation: 0,
-      clicked: false
+      clicked: false,
+      gameInProgess: false
     }
+  }
+  componentDidMount () {
+    this.gameStart()
   }
   nextGeneration = () => {
     for (let i = 0; i < cellsArr.length; i++){ // count cells alive neighbours
@@ -34,15 +40,34 @@ class Board extends Component {
       })
     }
   }
-  startGame = () => {
-    this.gameIsRunning = setInterval(this.nextGeneration, 500)
+  // buttons
+  gameStart = () => {
+    if (!this.state.gameInProgess){
+      this.setState({gameInProgess: true})
+      this.gameIsRunning = setInterval(this.nextGeneration, 500)
+    }
+    
   }
-  stopGame = () => {
-    clearInterval(this.gameIsRunning)
-    console.log('stopGame')
+  gameStop = () => {
+    if (this.state.gameInProgess){
+      clearInterval(this.gameIsRunning)
+      this.setState({gameInProgess: false})
+    }
+  }
+  gameClear = () => {
+    if (this.state.generation > 0){
+      this.gameStop()
+    }
+    for (let i = 0; i < cellsArr.length; i++){
+      cellsArr[i].forEach((cell) => {
+        cell.neighbourCount = 0
+        cell.alive = false
+      })
+      this.setState({generation: 0, gameInProgess: false})
+    }
+    
   }
   switchCellOffOrOn = (arr, row, col) => {
-    console.log('x and y', row, col)
     arr[row][col].alive = !arr[row][col].alive
     this.setState({clicked: true})
   }
@@ -67,20 +92,26 @@ class Board extends Component {
     return (
       <div className='board'>
         { cellsAll }
-        <button 
-          onClick={this.nextGeneration}>
-          Go
-        </button>
         <button
-          onClick={this.startGame}
+          onClick={this.gameStart}
         >
           Start
         </button>
         <button
-          onClick={this.stopGame}
+          onClick={this.gameStop}
         >
           Stop
-        </button>     
+        </button>
+        <button
+          onClick={this.gameClear}
+        >
+          Clear
+        </button>
+        <MuiThemeProvider>
+          <BadgeSimple 
+            count={this.state.generation}
+          />
+        </MuiThemeProvider>    
       </div>
     )
   }
