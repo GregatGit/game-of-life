@@ -9,14 +9,13 @@ class Board extends Component {
   constructor (props){
     super (props)
     this.state = {
-      boardLength: 10,
-      boardHeight: 10,
+      boardLength: 60,
+      boardHeight: 30,
       generation: 0,
       clicked: false
     }
   }
   nextGeneration = () => {
-    //console.log('before', cellsArr)
     for (let i = 0; i < cellsArr.length; i++){ // count cells alive neighbours
       for (let j = 0; j < cellsArr[i].length; j++){
         updateNeigboursCount(cellsArr, i, j, this.state.boardHeight, this.state.boardLength)
@@ -34,6 +33,13 @@ class Board extends Component {
         cell.neighbourCount = 0
       })
     }
+  }
+  startGame = () => {
+    this.gameIsRunning = setInterval(this.nextGeneration, 500)
+  }
+  stopGame = () => {
+    clearInterval(this.gameIsRunning)
+    console.log('stopGame')
   }
   switchCellOffOrOn = (arr, row, col) => {
     console.log('x and y', row, col)
@@ -61,7 +67,20 @@ class Board extends Component {
     return (
       <div className='board'>
         { cellsAll }
-        <button onClick={this.nextGeneration}>next Gen</button>
+        <button 
+          onClick={this.nextGeneration}>
+          Go
+        </button>
+        <button
+          onClick={this.startGame}
+        >
+          Start
+        </button>
+        <button
+          onClick={this.stopGame}
+        >
+          Stop
+        </button>     
       </div>
     )
   }

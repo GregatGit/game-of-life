@@ -1,7 +1,7 @@
 
 const updateNeigboursCount = function (arr, row, col, maxRow, maxCol) {
   let theCell = arr[row][col]
-  console.log('here: ', theCell.alive, row, col, theCell.neighbourCount)
+  //console.log('here: ', theCell.alive, row, col, theCell.neighbourCount)
   if (theCell.alive) {
     // check top row
     if (row !== 0){

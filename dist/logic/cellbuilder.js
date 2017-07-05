@@ -1,6 +1,7 @@
 const cellsArr = []
-let height = 10
-let width = 10
+let width = 60
+let height = 30
+
 
 function newCell(row, col){
   let temp = false
