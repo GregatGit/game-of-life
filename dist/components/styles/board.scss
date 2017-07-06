@@ -1,8 +1,9 @@
-$boardWidth60: 1320px;
+$boardWidth60: 1020px;
 $boardWidth10: 220px;
 $boardWidth5: 110px;
 
 .board {
+  background-color: gray;
   width: $boardWidth60;
   margin: 0 auto;
 }
